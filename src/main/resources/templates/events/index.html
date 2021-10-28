@@ -12,10 +12,18 @@
         <th>
             Name
         </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Location
+        </th>
     </tr>
     </thead>
-    <tr th:each="event : ${events}">
-        <td th:text="${event}">Event</td>
+    <tr th:each="event : ${events.entrySet()}">
+        <td th:text="${event.getKey()}">Event Name</td>
+        <td th:text="${event.getValue()}">Event Description</td>
+        <td th:replace="fragments :: address">Event Location</td>
     </tr>
 </table>
 </body>
