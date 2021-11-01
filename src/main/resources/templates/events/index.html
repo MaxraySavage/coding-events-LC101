@@ -3,12 +3,15 @@
 <head th:replace="fragments :: head"></head>
 <body class="container">
 <nav th:replace="fragments :: navigation"></nav>
-<h1>All Events</h1>
+<h1 th:text="${title}">All Events</h1>
 <p th:unless="${events} and ${events.size()}">No events!</p>
 
 <table class="table table-striped">
     <thead>
     <tr>
+        <th>
+            ID
+        </th>
         <th>
             Name
         </th>
@@ -20,9 +23,10 @@
         </th>
     </tr>
     </thead>
-    <tr th:each="event : ${events.entrySet()}">
-        <td th:text="${event.getKey()}">Event Name</td>
-        <td th:text="${event.getValue()}">Event Description</td>
+    <tr th:each="event : ${events}">
+        <td th:text="${event.getId()}">Event ID</td>
+        <td th:text="${event.getName()}">Event Name</td>
+        <td th:text="${event.getDescription()}">Event Description</td>
         <td th:replace="fragments :: address">Event Location</td>
     </tr>
 </table>
