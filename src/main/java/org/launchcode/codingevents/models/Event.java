@@ -1,79 +1,74 @@
 package org.launchcode.codingevents.models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Event {
-
-    @Id
-    @GeneratedValue
-    private int id;
+public class Event extends AbstractEntity{
 
     @NotBlank(message="Name must not be blank")
     @Size(min = 3, max= 50, message = "Name must be between 3 and 50 characters")
     private String name;
 
-    @Size(max= 500, message = "Description too long")
-    private String description;
+    @ManyToOne
+    @NotNull(message= "Category is required")
+    private EventCategory category;
 
-    @NotBlank(message="Email must not be blank")
-    @Email(message = "Invalid email")
-    private String contactEmail;
+    @OneToOne(cascade = CascadeType.ALL)
+    @Valid
+    @NotNull
+    private EventDetails details;
 
-    private EventType type;
+    @ManyToMany
+    private final List<Tag> tags = new ArrayList<>();
 
     public Event() {
     }
 
-    public Event(String name, String description, String contactEmail, EventType type) {
+    public Event(String name, EventCategory category) {
         this.name = name;
-        this.description = description;
-        this.contactEmail = contactEmail;
-        this.type = type;
+        this.category = category;
     }
 
+    public EventDetails getDetails() {
+        return details;
+    }
+
+    public void setDetails(EventDetails details) {
+        this.details = details;
+    }
 
     public String getName() {
         return name;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+
+    public EventCategory getCategory() {
+        return category;
     }
 
-    public String getContactEmail() {
-        return contactEmail;
+    public void setCategory(EventCategory category) {
+        this.category = category;
     }
 
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
+    public List<Tag> getTags() {
+        return tags;
     }
 
-    public EventType getType() {
-        return type;
-    }
-
-    public void setType(EventType type) {
-        this.type = type;
-    }
-
-    public int getId() {
-        return id;
+    public void addTag(Tag tag){
+        this.tags.add(tag);
     }
 
     @Override
@@ -81,16 +76,4 @@ public class Event {
         return name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return getId() == event.getId();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
 }

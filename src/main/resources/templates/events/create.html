@@ -15,25 +15,25 @@
         </div>
         <div class="form-group col-md-4">
             <label>Contact Email</label>
-            <input th:field="${event.contactEmail}" class="form-control" th:errorclass="is-invalid"/>
-            <small class="invalid-feedback" th:errors="${event.contactEmail}"></small>
+            <input th:field="${event.details.contactEmail}" class="form-control" th:errorclass="is-invalid"/>
+            <small class="invalid-feedback" th:errors="${event.details.contactEmail}"></small>
         </div>
         <div class="form-group col-md-4">
-            <label>Type</label>
-            <select th:field="${event.type}" class="form-control" th:errorclass="is-invalid">
-                <option th:each="type : ${types}"
-                        th:value="${type}"
-                        th:text="${type.displayName}">
+            <label>Category</label>
+            <select th:field="${event.category}" class="form-control" th:errorclass="is-invalid">
+                <option th:each="category : ${categories}"
+                        th:value="${category.id}"
+                        th:text="${category.getName()}">
                 </option>
             </select>
-            <small class="invalid-feedback" th:errors="${event.type}"></small>
+            <small class="invalid-feedback" th:errors="${event.category}"></small>
         </div>
     </div>
     <div class="row">
         <div class="form-group">
             <label>Description </label>
-            <textarea th:field="${event.description}" class="form-control" th:errorclass="is-invalid"/>
-            <small class="invalid-feedback" th:errors="${event.description}"></small>
+            <textarea th:field="${event.details.description}" class="form-control" th:errorclass="is-invalid"/>
+            <small class="invalid-feedback" th:errors="${event.details.description}"></small>
         </div>
     </div>
     <button type="submit" class="btn btn-success my-1">Create Event</button>

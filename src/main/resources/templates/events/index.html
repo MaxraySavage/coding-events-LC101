@@ -16,7 +16,7 @@
             Name
         </th>
         <th>
-            Event Type
+            Event Category
         </th>
         <th>
             Contact Email
@@ -36,11 +36,11 @@
         <tr>
             <td th:text="${event.getId()}">Event ID</td>
             <td th:text="${event.getName()}">Event Name</td>
-            <td th:text="${event.getType().getDisplayName()}">Event Type</td>
-            <td th:text="${event.getContactEmail()}">Event Contact Email</td>
+            <td th:text="${event.getCategory().getName()}">Event Type</td>
+            <td th:text="${event.details.getContactEmail()}">Event Contact Email</td>
             <td th:replace="fragments :: address">Event Location</td>
             <td>
-                <a class = "btn btn-primary" data-bs-toggle="collapse" th:href="'#description-' + ${event.getId()}" role="button" aria-expanded="false" th:aria-controls="'collapse-description-'+${event.getId()}">
+                <a class = "btn btn-primary accordion-toggle" data-bs-toggle="collapse" th:href="'#description-' + ${event.getId()}" role="button" aria-expanded="false" th:aria-controls="'collapse-description-'+${event.getId()}">
                     Description
                 </a>
             </td>
@@ -48,10 +48,12 @@
                 <a class="btn btn-info"  th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a>
             </td>
         </tr>
-        <tr class="collapse" th:id="'description-' + ${event.getId()}">
-            <td></td>
-            <td th:text="${event.getDescription()}" colspan="100">
-                Event Description
+        <tr >
+            <td colspan="100">
+                <div th:text="${event.details.getDescription()}" class="collapse accordion-body" th:id="'description-' + ${event.getId()}">
+                    Event Description
+                </div>
+
             </td>
         </tr>
     </th:block>
